@@ -39,11 +39,6 @@
 		var firstName = $firstNameFld.val();
 		var lastName = $lastNameFld.val();
 		var role = $roleFld.val();
-		console.log(username);
-		console.log(password);
-		console.log(firstName);
-		console.log(lastName);
-		console.log(role);
 		
 		var user = {
 				username: username,
@@ -52,7 +47,8 @@
 				lastName: lastName,
 				role: role
 		};
-		userService.createUser(user);
+		userService.createUser(user)
+		.then(findAllUsers);
 	}
 	
 	function findAllUsers() {
@@ -81,7 +77,7 @@
 	}
 	
 	function renderUsers(users) {
-		// $tbody.empty();
+		$tbody.empty();
 		for (var i = 0; i < users.length; i++) {
 			var user = users[i];
 			var $clone = $userRowTemplate.clone();
