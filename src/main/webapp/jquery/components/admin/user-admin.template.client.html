@@ -7,6 +7,8 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 	<link rel="stylesheet" href="user-admin.style.client.css" />
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="../../services/user.service.client.js"></script>
+	<script src="user-admin.controller.client.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -33,7 +35,9 @@
 					<td>
 						<span class="float-right" style="white-space: nowrap;">
 							<i class="fa-2x fa fa-search wbdv-search"></i>
-							<i class="fa-2x fa fa-plus wbdv-create"></i>
+							<a class="btn wbdv-createBtn">
+								<i class="fa-2x fa fa-plus wbdv-create"></i>
+							</a>
 							<i class="fa-2x fa fa-check wbdv-update"></i>
 						</span>
 					</td>
