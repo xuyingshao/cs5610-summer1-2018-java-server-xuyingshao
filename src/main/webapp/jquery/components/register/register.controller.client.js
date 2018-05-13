@@ -48,6 +48,7 @@
 			return;
 		}
 		else {	
+			debugger;
 			url = "../profile/profile.template.client.html";
 			window.location.href = url;		
 		}

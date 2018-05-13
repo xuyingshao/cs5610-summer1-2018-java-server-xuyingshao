@@ -71,15 +71,26 @@ function UserServiceClient() {
 				"content-type": "application/json"
 			}
 		})
-		.then(function(response){   			
+		.then(function(response) {
 			if (!response.bodyUsed) {   // FIXME
 				return null;
 			}
 			else {
 				return response.json();
-			}
-        })
-        ;
+			}	
+        });
+//		debugger;
+//
+//		let json = response.json();
+//		if (response.status >= 200 && response.status < 300) {
+//	    return json;
+//		  } else {
+//		    return json.then(Promise.reject.bind(Promise));
+//		  }
+//		
+//        }).catch(function(err) {
+//            console.log('Fetch Error :-S', err);
+//        });
 	}
 	
 	function login(user) {
