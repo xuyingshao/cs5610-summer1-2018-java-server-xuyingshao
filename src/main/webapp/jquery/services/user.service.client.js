@@ -37,11 +37,7 @@ function UserServiceClient() {
 	
 	function deleteUser(userId) {
 		return fetch(self.url + "/" + userId, {
-			method: "delete",
-			body: JSON.stringify(user),
-			headers: {
-				"content-type": "application/json"
-			}
+			method: "delete"
 		});
 	}
 	
@@ -54,11 +50,11 @@ function UserServiceClient() {
 			}
 		})
 		.then(function(response) {
-			if (response.bodyUsed) {
-				return response.json();
+			if (response === null) {
+				return null;
 			}
 			else {
-				return null;
+				return response.json();
 			}
 		});
 	}
@@ -72,7 +68,7 @@ function UserServiceClient() {
 			}
 		})
 		.then(function(response) {
-			if (!response.bodyUsed) {   // FIXME
+			if (!response.bodyUsed) {
 				return null;
 			}
 			else {
@@ -102,12 +98,12 @@ function UserServiceClient() {
 			}
 		})
 		.then(function(response){  		
-			if (!response.bodyUsed) {   // FIXME
+			if (!response.bodyUsed) {
 				return null;
 			}
 			else {
 				return response.json();
-			}	
+			}
         });
 	}
 }

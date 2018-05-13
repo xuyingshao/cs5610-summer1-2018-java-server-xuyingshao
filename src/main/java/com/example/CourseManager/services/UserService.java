@@ -50,7 +50,8 @@ public class UserService {
 	}
 	
 	@PutMapping("api/user/{userId}")
-	public User updateUser(@PathVariable("userId") int userId, @RequestBody User newUser) {
+	public User updateUser(@PathVariable("userId") int userId, 
+			@RequestBody User newUser) {
 		Optional<User> data = repository.findById(userId);
 		
 		if (data.isPresent()) {
@@ -79,7 +80,8 @@ public class UserService {
 	}
 	
 	@PostMapping("api/register")
-	public User register(@RequestBody User user, HttpSession session) {
+	public User register(@RequestBody User user, 
+			HttpSession session) {
 		String username = user.getUsername();
 		List<User> data = (List<User>)repository.findUserByUsername(username);
 		if (data.isEmpty()) {
@@ -92,7 +94,8 @@ public class UserService {
 	}
 	
 	@PostMapping("api/login")
-	public User login(@RequestBody User user, HttpSession session) {
+	public User login(@RequestBody User user, 
+			HttpSession session) {
 		String username = user.getUsername();
 		String password = user.getPassword();
 		List<User> data = (List<User>)repository.findUserByCredentials(username, password);
