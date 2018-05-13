@@ -15,7 +15,6 @@
 	}
 	
 	function register() {
-		console.log($usernameFld.val());
 		if ($usernameFld.val() === null || $usernameFld.val() === "") {
 			alert("username cannot be empty!");
 			return;
@@ -43,16 +42,20 @@
 	}
 	
 	function registerSuccess(response) {
-//		if (response === null) {
-//			alert("username already taken");
-//		 // clear form
-//		}
-//		else {	
+		if (response === null) {
+			alert("username already taken");
+			clearForm();
+			return;
+		}
+		else {	
 			url = "../profile/profile.template.client.html";
-			console.log(url);
 			window.location.href = url;		
-//			$(location).attr("href", url);
-//	
-//		}
+		}
+	}
+	
+	function clearForm() {
+		$usernameFld.val("");
+		$passwordFld.val("");
+		$verifyPasswordFld.val("");
 	}
 })();

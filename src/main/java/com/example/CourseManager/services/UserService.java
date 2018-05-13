@@ -78,14 +78,10 @@ public class UserService {
 		return null;
 	}
 	
-	public List<User> findUserByUsername(String username) {
-		return (List<User>) repository.findUserByUsername(username);
-	}
-	
 	@PostMapping("api/register")
 	public User register(@RequestBody User user, HttpSession session) {
 		String username = user.getUsername();
-		List<User> data = findUserByUsername(username);
+		List<User> data = (List<User>)repository.findUserByUsername(username);
 		if (data.isEmpty()) {
 			session.setAttribute(user.getUsername(), user);
 			return repository.save(user);
@@ -93,5 +89,20 @@ public class UserService {
 		else {
 			return null;
 		}
-	}	
+	}
+	
+	@PostMapping("api/login")
+	public User login(@RequestBody User user, HttpSession session) {
+		String username = user.getUsername();
+		String password = user.getPassword();
+		List<User> data = (List<User>)repository.findUserByCredentials(username, password);
+		if (data.isEmpty()) {
+			return null;
+		}
+		else {
+			User userData = data.get(0);
+			session.setAttribute(userData.getUsername(), userData);
+			return data.get(0);
+		}
+	}
 }
