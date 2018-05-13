@@ -3,6 +3,8 @@ package com.example.CourseManager.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -74,5 +76,22 @@ public class UserService {
 			return user;
 		}
 		return null;
+	}
+	
+	public List<User> findUserByUsername(String username) {
+		return (List<User>) repository.findUserByUsername(username);
+	}
+	
+	@PostMapping("api/register")
+	public User register(@RequestBody User user, HttpSession session) {
+		String username = user.getUsername();
+		List<User> data = findUserByUsername(username);
+		if (data.isEmpty()) {
+			session.setAttribute(user.getUsername(), user);
+			return repository.save(user);
+		}
+		else {
+			return null;
+		}
 	}	
 }
