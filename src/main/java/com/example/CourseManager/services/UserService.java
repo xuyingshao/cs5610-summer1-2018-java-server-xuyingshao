@@ -126,7 +126,7 @@ public class UserService {
 			String phone = user.getPhone();
 			String email = user.getEmail();
 			String role = user.getRole();
-			Date dob = user.getDateOfBirth();
+			Date dateOfBirth = user.getDateOfBirth();
 			
 			if (phone != null) {
 				old.setPhone(phone);
@@ -137,8 +137,8 @@ public class UserService {
 			if (role != null) {
 				old.setRole(role);
 			}
-			if (dob != null) {
-				old.setDateOfBirth(dob);
+			if (dateOfBirth != null) {
+				old.setDateOfBirth(dateOfBirth);
 			}
 			repository.save(old);
 			return old;	

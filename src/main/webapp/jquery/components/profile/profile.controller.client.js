@@ -30,13 +30,17 @@
 	}
 	
 	function updateProfile() {
+		var dob;
+		if ($dobFld.val() !== "") {
+			dob = new Date($dobFld.val()).toISOString();
+		}
 		var user = {
 				username: $usernameFld.val(),   
 				phone: $phoneFld.val(),
 				email: $emailFld.val(),
 				role: $roleFld.val(),
-				dob: $dobFld.val()		
-		}
+				dateOfBirth: dob
+		};
 		
 		userService.updateProfile(uid, user)
 		.then(updateSuccess);	

@@ -7,8 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 @Entity
 public class User {
 	@Id
@@ -22,7 +20,7 @@ public class User {
 	private String phone;
 	private String email;
 	private String role;
-	private Date dateOfBirth;
+	public Date dateOfBirth = new Date();
 	public int getId() {
 		return id;
 	}
