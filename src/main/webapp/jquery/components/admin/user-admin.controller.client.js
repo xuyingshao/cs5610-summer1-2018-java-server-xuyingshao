@@ -38,8 +38,9 @@
 				lastName: $lastNameFld.val(),
 				role: $roleFld.val()
 		};
+		clearInputForm();
 		userService.createUser(user)
-		.then(findAllUsers);
+		.then(findAllUsers);	
 	}
 	
 	function findAllUsers() {
@@ -66,7 +67,9 @@
 	
 	function updateUser(event) {
 		var userId = $inputForm.attr("id");
-		
+		if (userId === undefined) {
+			return;
+		}
 		var newUser = {
 				username: $usernameFld.val(),
 				password: $passwordFld.val(),
@@ -107,6 +110,7 @@
 	
 	function clearInputForm() {
 		$inputForm.find("#usernameFld").val("");
+		$inputForm.find("#passwordFld").val("");
 		$inputForm.find("#firstNameFld").val("");
 		$inputForm.find("#lastNameFld").val("");
 	}
