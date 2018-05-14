@@ -20,7 +20,8 @@ public class User {
 	private String phone;
 	private String email;
 	private String role;
-	public Date dateOfBirth = new Date();
+	private Date dateOfBirth;
+	
 	public int getId() {
 		return id;
 	}
