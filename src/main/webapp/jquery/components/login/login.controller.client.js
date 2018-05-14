@@ -34,7 +34,7 @@
 	}
 	
 	function loginSuccess(response) {
-		if (response.status === null) {
+		if (response === null) {
 			alert("user not exist OR password and username don't match!");
 			clearForm();
 			return;
