@@ -48,7 +48,7 @@
 			return;
 		}
 		else {	
-			url = "../profile/profile.template.client.html";
+			url = "../profile/profile.template.client.html?uid=" + response.id;
 			window.location.href = url;		
 		}
 	}

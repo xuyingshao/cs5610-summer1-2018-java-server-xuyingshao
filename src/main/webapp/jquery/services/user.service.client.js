@@ -6,9 +6,11 @@ function UserServiceClient() {
 	this.updateUser = updateUser;
 	this.register = register;
 	this.login = login;
+	this.updateProfile = updateProfile;
 	this.url = "http://localhost:8080/api/user";
 	this.registerUrl = "http://localhost:8080/api/register";
 	this.loginUrl = "http://localhost:8080/api/login";
+	this.profileUrl = "http://localhost:8080/api/profile";
 	var self = this;
 	
 	function createUser(user) {
@@ -68,25 +70,13 @@ function UserServiceClient() {
 			}
 		})
 		.then(function(response) {
-			if (!response.bodyUsed) {
+			if (response.status === 409) {
 				return null;
 			}
 			else {
 				return response.json();
 			}	
         });
-//		debugger;
-//
-//		let json = response.json();
-//		if (response.status >= 200 && response.status < 300) {
-//	    return json;
-//		  } else {
-//		    return json.then(Promise.reject.bind(Promise));
-//		  }
-//		
-//        }).catch(function(err) {
-//            console.log('Fetch Error :-S', err);
-//        });
 	}
 	
 	function login(user) {
@@ -98,7 +88,25 @@ function UserServiceClient() {
 			}
 		})
 		.then(function(response){  		
-			if (!response.bodyUsed) {
+			if (response.status === 409) {
+				return null;
+			}
+			else {
+				return response.json();
+			}
+        });
+	}
+	
+	function updateProfile(userId, user) {
+		return fetch(self.profileUrl + "/" + userId, {
+			method: "put",
+			body: JSON.stringify(user),
+			headers: {
+				"content-type": "application/json"
+			}
+		})
+		.then(function(response){  		
+			if (response.status === 409) {
 				return null;
 			}
 			else {

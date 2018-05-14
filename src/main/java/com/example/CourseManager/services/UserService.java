@@ -1,8 +1,10 @@
 package com.example.CourseManager.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +83,8 @@ public class UserService {
 	
 	@PostMapping("api/register")
 	public User register(@RequestBody User user, 
-			HttpSession session) {
+			HttpSession session,
+			HttpServletResponse response) {
 		String username = user.getUsername();
 		List<User> data = (List<User>)repository.findUserByUsername(username);
 		if (data.isEmpty()) {
@@ -89,17 +92,20 @@ public class UserService {
 			return repository.save(user);
 		}
 		else {
+			response.setStatus(HttpServletResponse.SC_CONFLICT);
 			return null;
 		}
 	}
 	
 	@PostMapping("api/login")
 	public User login(@RequestBody User user, 
-			HttpSession session) {
+			HttpSession session,
+			HttpServletResponse response) {
 		String username = user.getUsername();
 		String password = user.getPassword();
 		List<User> data = (List<User>)repository.findUserByCredentials(username, password);
 		if (data.isEmpty()) {
+			response.setStatus(HttpServletResponse.SC_CONFLICT);
 			return null;
 		}
 		else {
@@ -107,5 +113,39 @@ public class UserService {
 			session.setAttribute(userData.getUsername(), userData);
 			return data.get(0);
 		}
+	}
+	
+	@PutMapping("api/profile/{userId}")
+	public User updateProfile(@PathVariable("userId") int id, 
+			@RequestBody User user,
+			HttpServletResponse response) {
+		Optional<User> data = repository.findById(id);
+		
+		if (data.isPresent()) {
+			User old = data.get();
+			String phone = user.getPhone();
+			String email = user.getEmail();
+			String role = user.getRole();
+			Date dob = user.getDateOfBirth();
+			
+			if (phone != null) {
+				old.setPhone(phone);
+			}
+			if (email != null) {
+				old.setEmail(email);
+			}
+			if (role != null) {
+				old.setRole(role);
+			}
+			if (dob != null) {
+				old.setDateOfBirth(dob);
+			}
+			repository.save(old);
+			return old;	
+		}
+		else {
+			response.setStatus(HttpServletResponse.SC_CONFLICT);
+			return null;
+		}	
 	}
 }

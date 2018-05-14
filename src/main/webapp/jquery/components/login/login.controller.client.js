@@ -34,16 +34,16 @@
 	}
 	
 	function loginSuccess(response) {
-		if (response === null) {
+		if (response.status === null) {
 			alert("user not exist OR password and username don't match!");
 			clearForm();
 			return;
 		}
 		else {
-			url = "../profile/profile.template.client.html";
+			url = "../profile/profile.template.client.html?uid=" + response.id;
 			window.location.href = url;	
 		}
-	}
+	}	
 	
 	function clearForm() {
 		$usernameFld.val("");
