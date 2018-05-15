@@ -47,8 +47,7 @@
 	}
 	
 	function logout() {
-		url = "../login/login.template.client.html";
-		window.location.href = url;	
+		userService.logout();
 	}
 	
 	function updateSuccess(response) {
