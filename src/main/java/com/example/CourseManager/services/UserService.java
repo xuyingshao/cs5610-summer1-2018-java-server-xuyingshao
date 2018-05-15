@@ -24,22 +24,22 @@ public class UserService {
 	@Autowired
 	UserRepository repository;
 	
-	@GetMapping("api/user")
+	@GetMapping("/api/user")
 	public List<User> findAllUsers() {
 		return (List<User>)repository.findAll();
 	}
 	
-	@PostMapping("api/user")
+	@PostMapping("/api/user")
 	public User createUser(@RequestBody User user) {
 		return repository.save(user);
 	}
 	
-	@DeleteMapping("api/user/{userId}")
+	@DeleteMapping("/api/user/{userId}")
 	public void deleteUser(@PathVariable("userId") int userId) {
 		repository.deleteById(userId);;
 	}
 	
-	@GetMapping("api/user/{userId}")
+	@GetMapping("/api/user/{userId}")
 	public User findUserById(@PathVariable("userId") int userId) {
 		Optional<User> data = repository.findById(userId);
 		
@@ -51,7 +51,7 @@ public class UserService {
 		}
 	}
 	
-	@PutMapping("api/user/{userId}")
+	@PutMapping("/api/user/{userId}")
 	public User updateUser(@PathVariable("userId") int userId, 
 			@RequestBody User newUser) {
 		Optional<User> data = repository.findById(userId);
@@ -81,7 +81,11 @@ public class UserService {
 		return null;
 	}
 	
-	@PostMapping("api/register")
+	public List<User> findUserByUsername(String username) {
+		return (List<User>)repository.findUserByUsername(username);
+	}
+	
+	@PostMapping("/api/register")
 	public User register(@RequestBody User user, 
 			HttpSession session,
 			HttpServletResponse response) {
@@ -97,7 +101,12 @@ public class UserService {
 		}
 	}
 	
-	@PostMapping("api/login")
+	public List<User> findUserByCredentials(String username, 
+			String password) {
+		return (List<User>)repository.findUserByCredentials(username, password);
+	}
+	
+	@PostMapping("/api/login")
 	public User login(@RequestBody User user, 
 			HttpSession session,
 			HttpServletResponse response) {
@@ -115,7 +124,7 @@ public class UserService {
 		}
 	}
 	
-	@PutMapping("api/profile/{userId}")
+	@PutMapping("/api/profile/{userId}")
 	public User updateProfile(@PathVariable("userId") int id, 
 			@RequestBody User user,
 			HttpServletResponse response) {
