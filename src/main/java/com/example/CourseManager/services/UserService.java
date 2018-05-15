@@ -92,7 +92,7 @@ public class UserService {
 		String username = user.getUsername();
 		List<User> data = (List<User>)repository.findUserByUsername(username);
 		if (data.isEmpty()) {
-			session.setAttribute(user.getUsername(), user);
+			session.setAttribute("currentUser", user);
 			return repository.save(user);
 		}
 		else {
@@ -119,7 +119,7 @@ public class UserService {
 		}
 		else {
 			User userData = data.get(0);
-			session.setAttribute(userData.getUsername(), userData);
+			session.setAttribute("currentUser", userData);
 			return data.get(0);
 		}
 	}
@@ -127,6 +127,7 @@ public class UserService {
 	@PutMapping("/api/profile/{userId}")
 	public User updateProfile(@PathVariable("userId") int id, 
 			@RequestBody User user,
+			HttpSession session,
 			HttpServletResponse response) {
 		Optional<User> data = repository.findById(id);
 		
@@ -156,5 +157,10 @@ public class UserService {
 			response.setStatus(HttpServletResponse.SC_CONFLICT);
 			return null;
 		}	
+	}
+	
+	@PostMapping("/api/logout")
+	public void logout(HttpSession session) {
+		session.invalidate();
 	}
 }
