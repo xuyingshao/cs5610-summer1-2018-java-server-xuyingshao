@@ -6,12 +6,14 @@ function UserServiceClient() {
 	this.updateUser = updateUser;
 	this.register = register;
 	this.login = login;
-	this.logout = logout;
+//	this.logout = logout;
+	this.populateProfile = populateProfile;
 	this.updateProfile = updateProfile;
 	this.url = "/api/user";
 	this.registerUrl = "/api/register";
 	this.loginUrl = "/api/login";
 	this.profileUrl = "/api/profile";
+	this.logout = "/api/logout";
 	var self = this;
 	
 	function createUser(user) {
@@ -98,8 +100,21 @@ function UserServiceClient() {
         });
 	}
 	
-	function updateProfile(userId, user) {
-		return fetch(self.profileUrl + "/" + userId, {
+	function populateProfile() {
+		return fetch(self.profileUrl)
+		.then(function(response) {
+			if (response.status === 409) {
+				alert("something went wrong!");
+				return null;
+			}
+			else {
+				return response.json();
+			}
+		});
+	}
+	
+	function updateProfile(user) {
+		return fetch(self.profileUrl, {
 			method: "put",
 			body: JSON.stringify(user),
 			headers: {
@@ -116,8 +131,8 @@ function UserServiceClient() {
         });
 	}
 	
-	function logout() {
-		url = "../login/login.template.client.html";
-		window.location.href = url;	
-	}
+//	function logout() {
+//		
+//		
+//	}
 }

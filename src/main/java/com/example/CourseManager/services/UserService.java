@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -87,13 +87,16 @@ public class UserService {
 	
 	@PostMapping("/api/register")
 	public User register(@RequestBody User user, 
-			HttpSession session,
+			HttpServletRequest request,
 			HttpServletResponse response) {
 		String username = user.getUsername();
 		List<User> data = (List<User>)repository.findUserByUsername(username);
 		if (data.isEmpty()) {
-			session.setAttribute("currentUser", user);
-			return repository.save(user);
+			User newUser = repository.save(user);
+//			HttpSession session = request.getSession();
+//			session.setAttribute("user", newUser);		
+			request.getServletContext().setAttribute("user", user);
+			return newUser;
 		}
 		else {
 			response.setStatus(HttpServletResponse.SC_CONFLICT);
@@ -108,7 +111,7 @@ public class UserService {
 	
 	@PostMapping("/api/login")
 	public User login(@RequestBody User user, 
-			HttpSession session,
+			HttpServletRequest request,
 			HttpServletResponse response) {
 		String username = user.getUsername();
 		String password = user.getPassword();
@@ -119,20 +122,38 @@ public class UserService {
 		}
 		else {
 			User userData = data.get(0);
-			session.setAttribute("currentUser", userData);
-			return data.get(0);
+//			HttpSession session= request.getSession();			
+//			session.setAttribute("user", userData);
+			request.getServletContext().setAttribute("user", userData);
+			return userData;
 		}
 	}
 	
-	@PutMapping("/api/profile/{userId}")
-	public User updateProfile(@PathVariable("userId") int id, 
-			@RequestBody User user,
-			HttpSession session,
+	@GetMapping("/api/profile")
+	public User populateProfile(HttpServletRequest request,
 			HttpServletResponse response) {
-		Optional<User> data = repository.findById(id);
+		User currentUser = 
+				(User) request.getServletContext().getAttribute("user");
+//		User currentUser =
+//				(User) request.getSession().getAttribute("user");
+		if (currentUser == null) {
+			response.setStatus(HttpServletResponse.SC_CONFLICT);
+		}
+		return currentUser;
+	}
+	
+	@PutMapping("/api/profile")
+	public User updateProfile(@RequestBody User user,
+			HttpServletRequest request,
+			HttpServletResponse response) {
+		User currentUser = 
+				(User) request.getServletContext().getAttribute("user");
+//		User currentUser =
+//				(User) request.getSession().getAttribute("user");
+		List<User> data = (List<User>)repository.findUserByUsername(currentUser.getUsername());
 		
-		if (data.isPresent()) {
-			User old = data.get();
+		if (!data.isEmpty()) {
+			User old = data.get(0);
 			String phone = user.getPhone();
 			String email = user.getEmail();
 			String role = user.getRole();
@@ -158,9 +179,9 @@ public class UserService {
 			return null;
 		}	
 	}
-	
-	@PostMapping("/api/logout")
-	public void logout(HttpSession session) {
-		session.invalidate();
-	}
+//	
+//	@PostMapping("/api/logout")
+//	public void logout(HttpSession request) {
+//		request.getSession().invalidate();
+//	}
 }

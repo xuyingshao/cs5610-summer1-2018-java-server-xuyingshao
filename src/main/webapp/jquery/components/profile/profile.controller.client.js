@@ -17,23 +17,17 @@
 		$updateBtn = $("#updateBtn"); 
 		$logoutBtn = $("#logoutBtn");
 		
-		url = window.location.href;
-		var query = url.substring(url.indexOf('?') + 1);
-		uid = query.substring(query.indexOf("=") + 1);
-		
-		userService.findUserById(uid).
-		then(renderUsername);
+		var user = userService.populateProfile();
+		user.then(renderUsername);
 		
 		$('#dobFld').datepicker();
-		$updateBtn.click(updateProfile); 
+		$updateBtn.click(updateProfile);
 		$logoutBtn.click(logout);	
 	}
 	
 	function updateProfile() {
-		var dob;
-		if ($dobFld.val() !== "") {
-			dob = new Date($dobFld.val()).toISOString();
-		}
+		var dob = $dobFld.val() !== ""? new Date($dobFld.val()).toISOString() : null;
+		
 		var user = {
 				username: $usernameFld.val(),   
 				phone: $phoneFld.val(),
@@ -41,13 +35,15 @@
 				role: $roleFld.val(),
 				dateOfBirth: dob
 		};
-		
-		userService.updateProfile(uid, user)
+		console.log(user);
+		userService.updateProfile(user)
 		.then(updateSuccess);	
 	}
 	
 	function logout() {
-		userService.logout();
+//		userService.logout();
+		url = "../login/login.template.client.html";
+		window.location.replace(url);	
 	}
 	
 	function updateSuccess(response) {

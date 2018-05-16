@@ -48,8 +48,8 @@
 			return;
 		}
 		else {	
-			url = "../profile/profile.template.client.html?uid=" + response.id;
-			window.location.href = url;		
+			url = "../profile/profile.template.client.html";
+			window.location.replace(url);		
 		}
 	}
 	
