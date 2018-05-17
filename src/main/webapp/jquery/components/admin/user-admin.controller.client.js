@@ -70,13 +70,6 @@
 		if (userId === undefined) {
 			return;
 		}
-//		var newUser = {
-//				username: $usernameFld.val(),
-//				password: $passwordFld.val(),
-//				firstName: $firstNameFld.val(),
-//				lastName: $lastNameFld.val(),
-//				role: $roleFld.val()	
-//		};
 		var newUser = new User($usernameFld.val(), 
 				$passwordFld.val(),
 				$firstNameFld.val(),

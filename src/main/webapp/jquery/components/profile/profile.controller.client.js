@@ -48,9 +48,11 @@
 	function updateSuccess(response) {
 		if (response === null) {
 			$("#errorAlert").show();
+			$("#errorAlert").delay(3000).fadeOut(1000);
 		}
 		else {
 			$("#successAlert").show();
+			$("#successAlert").delay(3000).fadeOut(1000);
 		}
 	}
 	
