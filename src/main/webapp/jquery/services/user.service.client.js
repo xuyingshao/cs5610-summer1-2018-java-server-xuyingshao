@@ -6,19 +6,20 @@ function UserServiceClient() {
 	this.updateUser = updateUser;
 	this.register = register;
 	this.login = login;
-//	this.logout = logout;
+	this.logout = logout;
 	this.populateProfile = populateProfile;
 	this.updateProfile = updateProfile;
 	this.url = "/api/user";
 	this.registerUrl = "/api/register";
 	this.loginUrl = "/api/login";
 	this.profileUrl = "/api/profile";
-	this.logout = "/api/logout";
+	this.logoutUrl = "/api/logout";
 	var self = this;
 	
 	function createUser(user) {
 		return fetch(self.url, {
 			method: "post",
+			credentials: "same-origin",
 			body: JSON.stringify(user),
 			headers: {
 				"content-type": "application/json"
@@ -27,14 +28,18 @@ function UserServiceClient() {
 	}
 	
 	function findAllUsers() {
-		return fetch(self.url)
+		return fetch(self.url, {
+			credentials: "same-origin"
+		})
 		.then(function(response) {
 			return response.json();
 		});
 	} 
 	
 	function findUserById(userId) {
-		return fetch(self.url + "/" + userId)
+		return fetch(self.url + "/" + userId, {
+			credentials: "same-origin"
+		})
 		.then(function(response) {
 			return response.json();
 		});	
@@ -42,13 +47,15 @@ function UserServiceClient() {
 	
 	function deleteUser(userId) {
 		return fetch(self.url + "/" + userId, {
-			method: "delete"
+			method: "delete",
+			credentials: "same-origin",
 		});
 	}
 	
 	function updateUser(userId, newUser) {
 		return fetch(self.url + "/" + userId, {
 			method: "put",
+			credentials: "same-origin",
 			body: JSON.stringify(newUser),
 			headers: {
 				"content-type": "application/json"
@@ -67,6 +74,7 @@ function UserServiceClient() {
 	function register(user) {
 		return fetch(self.registerUrl, {
 			method: "post",
+			credentials: "same-origin",
 			body: JSON.stringify(user),
 			headers: {
 				"content-type": "application/json"
@@ -84,7 +92,8 @@ function UserServiceClient() {
 	
 	function login(user) {
 		return fetch(self.loginUrl, {
-			method: "post",
+			method: "put",
+			credentials: "same-origin",
 			body: JSON.stringify(user),
 			headers: {
 				"content-type": "application/json"
@@ -101,7 +110,9 @@ function UserServiceClient() {
 	}
 	
 	function populateProfile() {
-		return fetch(self.profileUrl)
+		return fetch(self.profileUrl, {
+			credentials: "same-origin"
+		})
 		.then(function(response) {
 			if (response.status === 409) {
 				alert("something went wrong!");
@@ -116,6 +127,7 @@ function UserServiceClient() {
 	function updateProfile(user) {
 		return fetch(self.profileUrl, {
 			method: "put",
+			credentials: "same-origin",
 			body: JSON.stringify(user),
 			headers: {
 				"content-type": "application/json"
@@ -131,8 +143,10 @@ function UserServiceClient() {
         });
 	}
 	
-//	function logout() {
-//		
-//		
-//	}
+	function logout() {
+		return fetch(self.logoutUrl, {
+			method: "post",
+			credentials: "same-origin"
+		})	
+	}
 }

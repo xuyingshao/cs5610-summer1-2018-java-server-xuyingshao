@@ -17,8 +17,8 @@
 		$updateBtn = $("#updateBtn"); 
 		$logoutBtn = $("#logoutBtn");
 		
-		var user = userService.populateProfile();
-		user.then(renderUsername);
+		userService.populateProfile()
+		.then(renderUsername);
 		
 		$('#dobFld').datepicker();
 		$updateBtn.click(updateProfile);
@@ -26,7 +26,7 @@
 	}
 	
 	function updateProfile() {
-		var dob = $dobFld.val() !== ""? new Date($dobFld.val()).toISOString() : null;
+		var dob = $dobFld.val() !== "" ? new Date($dobFld.val()).toISOString() : null;
 		
 		var user = {
 				username: $usernameFld.val(),   
@@ -57,6 +57,27 @@
 	
 	function renderUsername(user) {
 		var username = user.username;
+		var phone = user.phone;
+		var email = user.email;
+		var role = user.role;
+		var dob = user.dateOfBirth;
+		
 		$usernameFld.val(username);
+		if (phone != null) {
+			$phoneFld.val(phone);
+		}
+		if (email != null) {
+			$emailFld.val(email);
+		}
+		if (role != null) {
+			$roleFld.val(role);
+		}
+		if (dob != null) {
+			var date = new Date(dob);
+			var month = date.getMonth() + 1;
+			var day = date.getDay();
+			var year = date.getFullYear();
+			$dobFld.val(month + "/" + day + "/" + year);
+		}	
 	}
 })();
