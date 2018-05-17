@@ -35,13 +35,12 @@
 				role: $roleFld.val(),
 				dateOfBirth: dob
 		};
-		console.log(user);
 		userService.updateProfile(user)
 		.then(updateSuccess);	
 	}
 	
 	function logout() {
-//		userService.logout();
+		userService.logout();
 		url = "../login/login.template.client.html";
 		window.location.replace(url);	
 	}
