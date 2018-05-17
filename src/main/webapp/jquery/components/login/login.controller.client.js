@@ -1,7 +1,7 @@
 (function() {
 	var $usernameFld, $passwordFld;
 	var $loginBtn, $changeBtn, $updateBtn;
-	var $div1, $div2;
+	var $loginDiv, $changeDiv;
 	var $newUsernameFld, $newPasswordFld, $verifyPasswordFld;
 	
 	var userService = new UserServiceClient();
@@ -15,8 +15,8 @@
 		$changeBtn = $("#changeBtn");
 		$updateBtn = $("#updateBtn");
 		
-		$div1 = $("#login");
-		$div2 = $("#changepassword");
+		$loginDiv = $("#login");
+		$changeDiv = $("#changepassword");
 		
 		$newUsernameFld = $("#newUsernameFld");
 		$newPasswordFld = $("#newPasswordFld");
@@ -59,8 +59,8 @@
 	}	
 	
 	function showChangePage() {
-		$div1.hide();
-		$div2.show();
+		$loginDiv.hide();
+		$changeDiv.show();
 	}
 	
 	function changePassword() {
