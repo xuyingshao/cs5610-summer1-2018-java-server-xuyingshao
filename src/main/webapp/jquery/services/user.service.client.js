@@ -9,11 +9,13 @@ function UserServiceClient() {
 	this.logout = logout;
 	this.populateProfile = populateProfile;
 	this.updateProfile = updateProfile;
+	this.changePassword = changePassword;
 	this.url = "/api/user";
 	this.registerUrl = "/api/register";
 	this.loginUrl = "/api/login";
 	this.profileUrl = "/api/profile";
 	this.logoutUrl = "/api/logout";
+	this.passwordUrl = "/api/password";
 	var self = this;
 	
 	function createUser(user) {
@@ -148,5 +150,24 @@ function UserServiceClient() {
 			method: "post",
 			credentials: "same-origin"
 		})	
+	}
+	
+	function changePassword(user) {
+		return fetch(self.passwordUrl, {
+			method: "post",
+			credentials: "same-origin",
+			body: JSON.stringify(user),
+			headers: {
+				"content-type": "application/json"
+			}
+		})
+		.then(function(response) {
+			if (response.status === 409) {
+				return null;
+			}
+			else {
+				return response.json();
+			}
+		});
 	}
 }

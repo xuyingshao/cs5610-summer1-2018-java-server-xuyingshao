@@ -1,6 +1,8 @@
 (function() {
 	var $usernameFld, $passwordFld;
-	var $loginBtn;
+	var $loginBtn, $changeBtn, $updateBtn;
+	var $div1, $div2;
+	var $newUsernameFld, $newPasswordFld, $verifyPasswordFld;
 	
 	var userService = new UserServiceClient();
 	
@@ -10,8 +12,19 @@
 		$usernameFld = $("#usernameFld");
 		$passwordFld = $("#passwordFld");
 		$loginBtn = $("#loginBtn");
+		$changeBtn = $("#changeBtn");
+		$updateBtn = $("#updateBtn");
+		
+		$div1 = $("#login");
+		$div2 = $("#changepassword");
+		
+		$newUsernameFld = $("#newUsernameFld");
+		$newPasswordFld = $("#newPasswordFld");
+		$verifyPasswordFld = $("#verifyPasswordFld");
 		
 		$loginBtn.click(login);
+		$changeBtn.click(showChangePage);
+		$updateBtn.click(changePassword);
 	}
 	
 	function login() {
@@ -36,7 +49,7 @@
 	function loginSuccess(response) {
 		if (response === null) {
 			alert("user not exist OR password and username don't match!");
-			clearForm();
+			clearLoginForm();
 			return;
 		}
 		else {
@@ -45,13 +58,62 @@
 		}
 	}	
 	
+	function showChangePage() {
+		$div1.hide();
+		$div2.show();
+	}
+	
+	function changePassword() {
+		if ($newUsernameFld.val() === null || $newUsernameFld.val() === "") {
+			alert("username cannot be empty!");
+			return;
+		}
+		if ($newPasswordFld.val() === null || $newPasswordFld.val() === "") {
+			alert("password cannot be empty!");
+			return;
+		}
+		if ($verifyPasswordFld.val() === null || $verifyPasswordFld.val() === "") {
+			alert("please verify your password!");
+			return;
+		}
+		if ($newPasswordFld.val() !== $verifyPasswordFld.val()) {
+			alert("password does not match!");
+			return;
+		}
+		else {
+			var user = {
+					username: $newUsernameFld.val(),
+					password: $newPasswordFld.val()
+			}
+			userService.changePassword(user)
+			.then(changePasswordSuccess);
+		}
+	}
+	
+	function changePasswordSuccess(response) {
+		if (response === null) {
+			alert("user does not exist!");
+			clearChangeForm();
+		}
+		else {
+			url = "../profile/profile.template.client.html";
+			window.location.replace(url);
+		}
+	}
+	
 	function renderUsername(user) {
 		var username = user.username;
 		$usernameFld.val(username);
 	}
 	
-	function clearForm() {
+	function clearLoginForm() {
 		$usernameFld.val("");
 		$passwordFld.val("");
+	}
+	
+	function clearChangeForm() {
+		$newUsernameFld.val("");
+		$newPasswordFld.val("");
+		$verifyPasswordFld.val("");
 	}
 })();

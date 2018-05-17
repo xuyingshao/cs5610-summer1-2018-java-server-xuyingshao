@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -94,9 +93,7 @@ public class UserService {
 		List<User> data = (List<User>)repository.findUserByUsername(username);
 		if (data.isEmpty()) {
 			User newUser = repository.save(user);			
-			session.setAttribute("user", newUser);		
-//			request.getServletContext().setAttribute("user", user);
-			
+			session.setAttribute("user", newUser);					
 			return newUser;
 		}
 		else {
@@ -124,7 +121,6 @@ public class UserService {
 		else {
 			User userData = data.get(0);		
 			session.setAttribute("user", userData);
-//			request.getServletContext().setAttribute("user", userData);
 			return userData;
 		}
 	}
@@ -132,8 +128,6 @@ public class UserService {
 	@GetMapping("/api/profile")
 	public User populateProfile(HttpSession session,
 			HttpServletResponse response) {
-//		User currentUser = 
-//				(User) request.getServletContext().getAttribute("user");
 		User currentUser =
 				(User) session.getAttribute("user");
 		if (currentUser == null) {
@@ -145,9 +139,7 @@ public class UserService {
 	@PutMapping("/api/profile")
 	public User updateProfile(@RequestBody User user,
 			HttpSession session,
-			HttpServletResponse response) {
-//		User currentUser = 
-//				(User) request.getServletContext().getAttribute("user");
+			HttpServletResponse response) {		
 		User currentUser =
 				(User) session.getAttribute("user");
 		
@@ -184,5 +176,23 @@ public class UserService {
 	@PostMapping("/api/logout")
 	public void logout(HttpSession session) {
 		session.invalidate();
+	}
+	
+	@PostMapping("/api/password")
+	public User changePassword(@RequestBody User user, 
+			HttpSession session,
+			HttpServletResponse response) {
+		List<User> userData = (List<User>)repository.findUserByUsername(user.getUsername());
+		if (userData.isEmpty()) {
+			response.setStatus(HttpServletResponse.SC_CONFLICT);
+			return null;
+		}
+		else {
+			User oldUser = userData.get(0);
+			oldUser.setPassword(user.getPassword());
+			repository.save(oldUser);
+			session.setAttribute("user", oldUser);
+			return oldUser;
+		}	
 	}
 }
