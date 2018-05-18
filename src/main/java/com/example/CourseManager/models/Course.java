@@ -9,7 +9,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
-
 @Entity
 public class Course {
 	@Id
