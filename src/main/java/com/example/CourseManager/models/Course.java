@@ -1,9 +1,11 @@
 package com.example.CourseManager.models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.GeneratedValue;
@@ -20,8 +22,8 @@ public class Course {
 	private Date created;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modified;
-//	@OneToMany(mappedBy = "course")
-//	private List<Module> modules;
+	@OneToMany(mappedBy = "course")
+	private List<Module> modules;
 	
 	public int getId() {
 		return id;
@@ -46,5 +48,11 @@ public class Course {
 	}
 	public void setModified(Date modified) {
 		this.modified = modified;
+	}
+	public List<Module> getModules() {
+		return modules;
+	}
+	public void setModules(List<Module> modules) {
+		this.modules = modules;
 	}
 }
