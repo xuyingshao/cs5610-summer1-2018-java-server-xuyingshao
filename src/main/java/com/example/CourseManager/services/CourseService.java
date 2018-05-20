@@ -1,5 +1,6 @@
 package com.example.CourseManager.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
@@ -24,8 +25,8 @@ public class CourseService {
 	CourseRepository courseRepository;
 	
 	@GetMapping("/api/course")
-	public Iterable<Course> findAllCourses() {
-		return courseRepository.findAll();
+	public List<Course> findAllCourses() {
+		return (List<Course>)courseRepository.findAll();
 	}
 	
 	@PostMapping("/api/course")

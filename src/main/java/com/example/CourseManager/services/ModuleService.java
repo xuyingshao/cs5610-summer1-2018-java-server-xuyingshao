@@ -26,8 +26,8 @@ public class ModuleService {
 	@Autowired
 	ModuleRepository moduleRepository;
 	
-	@PostMapping("/api/course/{cid}/module")
-	public Module createModule(@PathVariable("cid") int courseId,
+	@PostMapping("/api/course/{courseId}/module")
+	public Module createModule(@PathVariable("courseId") int courseId,
 			@RequestBody Module newModule) {
 		Optional<Course> data = courseRepository.findById(courseId);
 		if (data.isPresent()) {
@@ -38,27 +38,27 @@ public class ModuleService {
 		return null;	
 	}
 	
-	@DeleteMapping("/api/module/{id}")
-	public void deleteModule(@PathVariable("id") int id) {
-		moduleRepository.deleteById(id);
+	@DeleteMapping("/api/module/{moduleId}")
+	public void deleteModule(@PathVariable("moduleId") int moduleId) {
+		moduleRepository.deleteById(moduleId);
 	}
 	
 	@GetMapping("/api/module")
-	public Iterable<Module> findAllModules() {
-		return moduleRepository.findAll();
+	public List<Module> findAllModules() {
+		return (List<Module>)moduleRepository.findAll();
 	}
 	
 	@GetMapping("/api/module/{id}")
-	public Module findModuleById(@PathVariable("id") int id) {
-		Optional<Module> data = moduleRepository.findById(id);
+	public Module findModuleById(@PathVariable("id") int moduleId) {
+		Optional<Module> data = moduleRepository.findById(moduleId);
 		if (data.isPresent()) {
 			return data.get();
 		}
 		return null;
 	}
 	
-	@GetMapping("/api/course/{cid}/module")
-	public List<Module> findAllModulesForCourse(@PathVariable("cid") int courseId) {
+	@GetMapping("/api/course/{courseId}/module")
+	public List<Module> findAllModulesForCourse(@PathVariable("courseId") int courseId) {
 		Optional<Course> data = courseRepository.findById(courseId);
 		if (data.isPresent()) {
 			Course course = data.get();
