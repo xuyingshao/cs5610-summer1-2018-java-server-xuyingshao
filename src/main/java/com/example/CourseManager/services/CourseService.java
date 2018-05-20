@@ -30,7 +30,7 @@ public class CourseService {
 	}
 	
 	@PostMapping("/api/course")
-	public Course createCouse(@RequestBody Course course) {
+	public Course createCourse(@RequestBody Course course) {
 		return courseRepository.save(course);
 	}
 	

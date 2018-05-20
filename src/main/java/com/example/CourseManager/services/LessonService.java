@@ -1,6 +1,7 @@
 package com.example.CourseManager.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class LessonService {
 	@Autowired
 	ModuleRepository moduleRepository;
@@ -55,7 +57,7 @@ public class LessonService {
 		return null;
 	}
 	
-	@GetMapping("/api/course/{courseId}/module/{moduleId}")
+	@GetMapping("/api/course/{courseId}/module/{moduleId}/lesson")
 	public List<Lesson> findAllLessonsForModule(@PathVariable("moduleId") int moduleId) {
 		Optional<Module> data = moduleRepository.findById(moduleId);
 		if (data.isPresent()) {
