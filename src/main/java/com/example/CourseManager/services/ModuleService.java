@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.CourseManager.models.Course;
 import com.example.CourseManager.models.Module;
 import com.example.CourseManager.repositories.CourseRepository;
+import com.example.CourseManager.repositories.LessonRepository;
 import com.example.CourseManager.repositories.ModuleRepository;
 
 import java.util.List;
@@ -25,6 +26,8 @@ public class ModuleService {
 	CourseRepository courseRepository;
 	@Autowired
 	ModuleRepository moduleRepository;
+	@Autowired
+	LessonRepository lessonRepository;
 	
 	@PostMapping("/api/course/{courseId}/module")
 	public Module createModule(@PathVariable("courseId") int courseId,
@@ -40,6 +43,14 @@ public class ModuleService {
 	
 	@DeleteMapping("/api/module/{moduleId}")
 	public void deleteModule(@PathVariable("moduleId") int moduleId) {
+//		Optional<Module> data = moduleRepository.findById(moduleId);
+//		if (data.isPresent()) {
+//			Module module = data.get();
+//			List<Lesson> lessons = module.getLessons();
+//			for (Lesson lesson : lessons) {
+//				lessonRepository.deleteById(lesson.getId());
+//			}
+//		}	
 		moduleRepository.deleteById(moduleId);
 	}
 	

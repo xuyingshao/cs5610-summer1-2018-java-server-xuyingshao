@@ -18,6 +18,8 @@ import com.example.CourseManager.repositories.ModuleRepository;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletResponse;
+
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class LessonService {
@@ -58,12 +60,14 @@ public class LessonService {
 	}
 	
 	@GetMapping("/api/course/{courseId}/module/{moduleId}/lesson")
-	public List<Lesson> findAllLessonsForModule(@PathVariable("moduleId") int moduleId) {
+	public List<Lesson> findAllLessonsForModule(@PathVariable("moduleId") int moduleId,
+			HttpServletResponse response) {
 		Optional<Module> data = moduleRepository.findById(moduleId);
 		if (data.isPresent()) {
 			Module module = data.get();
 			return module.getLessons();
 		}
+		response.setStatus(HttpServletResponse.SC_CONFLICT);
 		return null;
 	}
 	

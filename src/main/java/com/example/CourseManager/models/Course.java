@@ -3,6 +3,7 @@ package com.example.CourseManager.models;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -22,7 +23,9 @@ public class Course {
 	private Date created;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modified;
-	@OneToMany(mappedBy = "course")
+	@OneToMany(mappedBy = "course",
+			cascade = CascadeType.ALL, 
+			orphanRemoval = true)
 	private List<Module> modules;
 	
 	public int getId() {
