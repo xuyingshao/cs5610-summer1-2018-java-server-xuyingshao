@@ -16,7 +16,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Module {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	private int id;
 	private String title;
 	@ManyToOne
