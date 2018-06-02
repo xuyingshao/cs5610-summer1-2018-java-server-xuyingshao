@@ -108,10 +108,10 @@ public class Widget {
 //	public void setListType(ListType listType) {
 //		this.listType = listType;
 //	}
-//	public Lesson getLesson() {
-//		return lesson;
-//	}
-//	public void setLesson(Lesson lesson) {
-//		this.lesson = lesson;
-//	}
+	public Lesson getLesson() {
+		return lesson;
+	}
+	public void setLesson(Lesson lesson) {
+		this.lesson = lesson;
+	}
 }

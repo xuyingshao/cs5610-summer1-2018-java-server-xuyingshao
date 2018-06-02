@@ -72,28 +72,28 @@ public class WidgetService {
 		return null;
 	}
 	
-	// "/api/course/{courseId}/module/{moduleId}/lesson/{lessonId}/module/save"
-	@PostMapping("/api/lesson/{lessonId}/widget/save")
-	public void saveWidgetsForLesson(
-			@PathVariable("lessonId") int lessonId,
-			@RequestBody List<Widget> widgets) {
-		Optional<Lesson> data = lessonRepository.findById(lessonId);
-		if (data.isPresent()) {
-			Lesson lesson = data.get();
-			
-			for (Widget widget : widgetRepository.findAll()) {
-				if (widget.getLesson() != null && 
-						widget.getLesson().getId() == lessonId) {
-					widgetRepository.delete(widget);
-				}
-			}
-			
-			for (Widget widget : widgets) {
-				widget.setLesson(lesson);
-				widgetRepository.save(widget);
-			}
-		}
-	}
+//	// "/api/course/{courseId}/module/{moduleId}/lesson/{lessonId}/module/save"
+//	@PostMapping("/api/lesson/{lessonId}/widget/save")
+//	public void saveWidgetsForLesson(
+//			@PathVariable("lessonId") int lessonId,
+//			@RequestBody List<Widget> widgets) {
+//		Optional<Lesson> data = lessonRepository.findById(lessonId);
+//		if (data.isPresent()) {
+//			Lesson lesson = data.get();
+//			
+//			for (Widget widget : widgetRepository.findAll()) {
+//				if (widget.getLesson() != null && 
+//						widget.getLesson().getId() == lessonId) {
+//					widgetRepository.delete(widget);
+//				}
+//			}
+//			
+//			for (Widget widget : widgets) {
+//				widget.setLesson(lesson);
+//				widgetRepository.save(widget);
+//			}
+//		}
+//	}
 	
 	@PostMapping("/api/widget/save")
 	public void save(@RequestBody List<Widget> widgets) {
@@ -103,52 +103,52 @@ public class WidgetService {
 		}
 	}
 	
-	@PutMapping("/api/widget/{widgetId}")
-	public Widget updateWidget(@PathVariable("widgetId") int widgetId,
-			@RequestBody Widget newWidget) {
-		Optional<Widget> data = widgetRepository.findById(widgetId);
-		if (data.isPresent()) {
-				Widget widget = data.get();
-				if (newWidget.getName() != null) {
-					widget.setName(newWidget.getName());
-				}
-				if (newWidget.getDisplayOrder() != 0) {
-					widget.setDisplayOrder(newWidget.getDisplayOrder());
-				}
-				if (newWidget.getText() != null) {
-					widget.setText(newWidget.getText());
-				}
-				if (newWidget.getWidgetType() != null) {
-					widget.setWidgetType(newWidget.getWidgetType());
-				}
-				if (newWidget.getStyle() != null) {
-					widget.setStyle(newWidget.getStyle());
-				}
-				if (newWidget.getWidth() != null) {
-					widget.setWidth(newWidget.getWidth());
-				}
-				if (newWidget.getHeight() != null) {
-					widget.setHeight(newWidget.getHeight());
-				}
-				if (newWidget.getSize() != null) {
-					widget.setSize(newWidget.getSize());
-				}
-				if (newWidget.getHref() != null) {
-					widget.setHref(newWidget.getHref());
-				}
-				if (newWidget.getSrc() != null) {
-					widget.setSrc(newWidget.getSrc());
-				}
-				if (newWidget.getListItems() != null) {
-					widget.setListItems(newWidget.getListItems());
-				}
-				if (newWidget.getListType() != null) {
-					widget.setListType(newWidget.getListType());
-				}
-				widgetRepository.save(widget);
-		}
-		return null;
-	}
+//	@PutMapping("/api/widget/{widgetId}")
+//	public Widget updateWidget(@PathVariable("widgetId") int widgetId,
+//			@RequestBody Widget newWidget) {
+//		Optional<Widget> data = widgetRepository.findById(widgetId);
+//		if (data.isPresent()) {
+//				Widget widget = data.get();
+//				if (newWidget.getName() != null) {
+//					widget.setName(newWidget.getName());
+//				}
+//				if (newWidget.getDisplayOrder() != 0) {
+//					widget.setDisplayOrder(newWidget.getDisplayOrder());
+//				}
+//				if (newWidget.getText() != null) {
+//					widget.setText(newWidget.getText());
+//				}
+//				if (newWidget.getWidgetType() != null) {
+//					widget.setWidgetType(newWidget.getWidgetType());
+//				}
+//				if (newWidget.getStyle() != null) {
+//					widget.setStyle(newWidget.getStyle());
+//				}
+//				if (newWidget.getWidth() != null) {
+//					widget.setWidth(newWidget.getWidth());
+//				}
+//				if (newWidget.getHeight() != null) {
+//					widget.setHeight(newWidget.getHeight());
+//				}
+//				if (newWidget.getSize() != null) {
+//					widget.setSize(newWidget.getSize());
+//				}
+//				if (newWidget.getHref() != null) {
+//					widget.setHref(newWidget.getHref());
+//				}
+//				if (newWidget.getSrc() != null) {
+//					widget.setSrc(newWidget.getSrc());
+//				}
+//				if (newWidget.getListItems() != null) {
+//					widget.setListItems(newWidget.getListItems());
+//				}
+//				if (newWidget.getListType() != null) {
+//					widget.setListType(newWidget.getListType());
+//				}
+//				widgetRepository.save(widget);
+//		}
+//		return null;
+//	}
 	
 	@DeleteMapping("/api/widget/{widgetId}")
 	public void deleteWidget(@PathVariable("widgetId") int widgetId) {
