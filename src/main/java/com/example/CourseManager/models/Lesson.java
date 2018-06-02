@@ -25,6 +25,7 @@ public class Lesson {
 	@OneToMany(mappedBy = "lesson",
 			   cascade = CascadeType.ALL, 
 			   orphanRemoval = true)
+	@JsonIgnore         // added for react-native
 	private List<Widget> widgets;
 	
 	public int getId() {

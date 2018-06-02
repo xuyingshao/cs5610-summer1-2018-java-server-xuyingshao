@@ -24,6 +24,7 @@ public class Module {
 	@OneToMany(mappedBy = "module", 
 			cascade = CascadeType.ALL, 
 			orphanRemoval = true)
+	@JsonIgnore         // added for react-native
 	private List<Lesson> lessons;
 	
 	public int getId() {
