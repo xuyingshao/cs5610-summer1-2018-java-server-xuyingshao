@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.CourseManager.models.Exam;
 import com.example.CourseManager.models.Lesson;
-import com.example.CourseManager.models.Question;
 import com.example.CourseManager.models.Widget;
 import com.example.CourseManager.repositories.EssayQuestionRepository;
 import com.example.CourseManager.repositories.ExamRepository;
@@ -59,19 +58,13 @@ public class ExamService {
 	
 	@GetMapping("/api/lesson/{lessonId}/exam")
 	public List<Exam> findAllExamsForLesson(@PathVariable("lessonId") int lessonId) {
-		Optional<Lesson> data = lessonRepository.findById(lessonId);
-		
-		if (data.isPresent()) {
-			List<Exam> exams = new ArrayList<Exam>();
-			Lesson lesson = data.get();
-			for (Widget widget : lesson.getWidgets()) {
-				if (widget instanceof Widget) {
-					exams.add((Exam)widget);
-				}
+		List<Exam> exams = new ArrayList<Exam>();
+		for (Exam exam : examRepository.findAll()) {
+			if (exam.getLesson().getId() == lessonId) {
+				exams.add(exam);
 			}
-			return exams;
 		}
-		return null;
+		return exams;
 	}
 	
 	@PostMapping("/api/lesson/{lessonId}/exam") 

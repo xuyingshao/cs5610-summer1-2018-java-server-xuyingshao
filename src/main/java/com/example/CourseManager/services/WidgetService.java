@@ -28,7 +28,6 @@ public class WidgetService {
 	@Autowired
 	LessonRepository lessonRepository;
 	
-	// "/api/course/{courseId}/module/{moduleId}/lesson/{lessonId}/module"
 	@GetMapping("/api/lesson/{lessonId}/widget")
 	public List<Widget> findAllWidgetsForLesson(
 			@PathVariable("lessonId") int lessonId,

@@ -40,7 +40,7 @@ public class QuestionService {
 	@Autowired
 	TrueOrFalseQuestionRepository trueFalseRepository;
 	
-	@GetMapping("/api/exam")
+	@GetMapping("/api/question")
 	public List<Question> findAllQuestions() {
 		return (List<Question>) questionRepository.findAll();
 	}
