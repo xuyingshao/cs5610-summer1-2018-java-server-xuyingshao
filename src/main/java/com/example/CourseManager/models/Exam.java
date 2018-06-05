@@ -2,6 +2,7 @@ package com.example.CourseManager.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
@@ -11,7 +12,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Exam extends Widget {
 	private String title;
 	private String description;
-	@OneToMany(mappedBy = "exam")
+	@OneToMany(mappedBy = "exam",
+			   cascade = CascadeType.ALL, 
+			   orphanRemoval = true)
 	@JsonIgnore
 	private List<Question> questions;
 	

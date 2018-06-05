@@ -23,6 +23,7 @@ public class Question {
 	private String description;
 	private String instruction;
 	private String questionType;
+	private String icon;
 	@ManyToOne
 	@JsonIgnore
 	private Exam exam;
@@ -68,5 +69,11 @@ public class Question {
 	}
 	public void setExam(Exam exam) {
 		this.exam = exam;
+	}
+	public String getIcon() {
+		return icon;
+	}
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 }

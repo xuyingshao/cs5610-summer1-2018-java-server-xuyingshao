@@ -7,6 +7,7 @@ public class Assignment extends Widget {
 	private String title;
 	private String description;
 	private int points;
+	
 	public String getTitle() {
 		return title;
 	}
