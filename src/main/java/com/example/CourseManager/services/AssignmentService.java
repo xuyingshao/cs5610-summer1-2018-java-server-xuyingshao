@@ -66,9 +66,9 @@ public class AssignmentService {
 		if (data.isPresent()) {
 			Lesson lesson = data.get();
 			assignment.setLesson(lesson);
-			widgetRepository.save(assignment);
-//			return assignmentRepository.save(assignment);
-			return assignment;
+//			widgetRepository.save(assignment);
+			return assignmentRepository.save(assignment);
+//			return assignment;
 		}
 		return null;
 	}
